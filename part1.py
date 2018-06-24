@@ -39,7 +39,7 @@ def main():
 	tweets = api.user_timeline(screen_name=username, count=num_tweets, tweet_mode="extended")
 	for tweet in tweets:
 		tweet_json = json.dumps(tweet.full_text)
-		tweet_token = [word for word in nltk.word_tokenize(tweet_json) if word.isalpha() and word not in stopwords]
+		tweet_token = [word for word in nltk.word_tokenize(tweet_json) if word[0].isalpha() and word not in stopwords]
 		tweet_tagged = nltk.pos_tag(tweet_token)
 		for tt in tweet_tagged:
 			word_list.append(tt)
@@ -49,9 +49,9 @@ def main():
 			retweet += tweet.retweet_count
 
 	freDist = nltk.FreqDist(word_list).most_common()
-	nouns = sorted([(tt[0][0], tt[1]) for tt in freDist if tt[0][1] == 'NN'], key= lambda x: x[1], reverse=True)[:5]
-	verbs = sorted([(tt[0][0], tt[1]) for tt in freDist if tt[0][1] == 'VB'], key= lambda x: x[1], reverse=True)[:5]
-	adjs = sorted([(tt[0][0], tt[1]) for tt in freDist if tt[0][1] == 'JJ'], key= lambda x: x[1], reverse=True)[:5]
+	nouns = sorted([(tt[0][0], tt[1]) for tt in freDist if 'NN' in tt[0][1]], key= lambda x: (x[1],x[0].lower()), reverse=True)[:5]
+	verbs = sorted([(tt[0][0], tt[1]) for tt in freDist if 'VB' in tt[0][1]], key= lambda x: (x[1],x[0].lower()), reverse=True)[:5]
+	adjs = sorted([(tt[0][0], tt[1]) for tt in freDist if 'JJ' in tt[0][1]], key= lambda x: (x[1],x[0].lower()), reverse=True)[:5]
 	# except Exception as error:
 	# 	print('cannot found this user')
 	# 	sys.exit(1)	
