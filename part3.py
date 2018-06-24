@@ -12,8 +12,6 @@ response = requests.get(path)
 soup = BeautifulSoup(response.text, "html.parser")
 
 print("Michigan Daily -- MOST READ")
-author_list = []
-title_list = []
 titles = soup.find("aside", {"class": "asidebar"}).find("div", {"class": "panel-pane pane-mostread"}).findAll("li")
 for t in titles:
     next_url = path + t.a.get('href')

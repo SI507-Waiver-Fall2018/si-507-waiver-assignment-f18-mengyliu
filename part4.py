@@ -9,11 +9,10 @@ import plotly
 # Code here should involve creation of the bar chart as specified in instructions
 # And opening / using the CSV file you created earlier with noun data from tweets
 plotly.tools.set_credentials_file(username='junedull', api_key='jP3YKkAzpniXfJTFXXs3')
-data=[]
 nouns=[]
 frequencys = []
 with open('noun_data.csv', 'rb') as csvfile:
-	lines = [x.decode('utf8').strip() for x in csvfile.readlines()]
+	lines = [line.decode('utf8').strip() for line in csvfile.readlines()]
 	
 for line in lines[1:]:
     noun, frequency = line.split(",")
