@@ -21,7 +21,6 @@ if sys.argv[1] == "customers":
 elif sys.argv[1] == "employees":
 	employees = cur.execute("SELECT Id, FirstName, LastName FROM employee").fetchall()
 	print("Id\t\tEmployee Name")
-	rows_in_employee_table = cur.execute(statement2)
 	for row in employees:
 		print('{}\t\t{} {}'.format(*row), sep='')
 
@@ -35,7 +34,9 @@ elif sys.argv[1] == "orders":
 
 	elif cmd == "emp":
 		eId = cur.execute("SELECT EmployeeId FROM Employee WHERE LastName = '{}')".format(opt)).fetchone[0]
+		print(eId)
 		es = cur.execute("SELECT OrderDate FROM [Order] WHERE EmployeeId = '{}'".format(eId)).fetchall()
 		print('Order dates processed by Employee {}, ID {}'.format(opt, eId))
-			for row in es:
-				print(*es)	
+		for row in es:
+			print(*es)
+cur.close()	
