@@ -38,15 +38,20 @@ def main():
 	word_list = []
 	tweets = api.user_timeline(screen_name=username, count=num_tweets, tweet_mode="extended")
 	for tweet in tweets:
-		tweet_json = json.dumps(tweet.full_text)
-		tweet_token = [word for word in nltk.word_tokenize(tweet_json) if word[0].isalpha() and word not in stopwords]
-		tweet_tagged = nltk.pos_tag(tweet_token)
-		for tt in tweet_tagged:
-			word_list.append(tt)
-		if 'RT @' not in tweet.full_text:
+		if 'retweeted_status' in dir(tweet):
+			tweet_info = tweet.retweeted_status.full_text
+		else:
+			tweet_info = tweet.full_text
 			original_count += 1
 			favorite += tweet.favorite_count
 			retweet += tweet.retweet_count
+		# tweet_json = json.dumps(tweet_info)
+		# print(tweet_info)
+		tweet_token = [word for word in nltk.word_tokenize(tweet_info) if word[0].isalpha() and word not in stopwords]
+		tweet_tagged = nltk.pos_tag(tweet_token)
+		for tt in tweet_tagged:
+			word_list.append(tt)
+			
 
 	freDist = nltk.FreqDist(word_list).most_common()
 	nouns = sorted([(tt[0][0], tt[1]) for tt in freDist if 'NN' in tt[0][1]], key= lambda x: (x[1],x[0].lower()), reverse=True)[:5]
