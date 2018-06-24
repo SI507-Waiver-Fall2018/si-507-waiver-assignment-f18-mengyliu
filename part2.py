@@ -28,15 +28,14 @@ elif sys.argv[1] == "orders":
 	cmd, opt = sys.argv[2].split('=')
 	if cmd == "cust":
 		cs = cur.execute("SELECT OrderDate FROM [Order] WHERE CustomerId ='{}'".format(opt)).fetchall()
-		print('Order date by ID {}'.format(opt))
+		print('Order dates')
 		for row in cs:
 			print(*row)
 
 	elif cmd == "emp":
-		eId = cur.execute("SELECT EmployeeId FROM Employee WHERE LastName = '{}')".format(opt)).fetchone[0]
-		print(eId)
+		eId = cur.execute("SELECT Id FROM Employee WHERE LastName = '{}'".format(opt)).fetchone()[0]
 		es = cur.execute("SELECT OrderDate FROM [Order] WHERE EmployeeId = '{}'".format(eId)).fetchall()
-		print('Order dates processed by Employee {}, ID {}'.format(opt, eId))
+		print('Order dates')
 		for row in es:
-			print(*es)
+			print(*row)
 cur.close()	
