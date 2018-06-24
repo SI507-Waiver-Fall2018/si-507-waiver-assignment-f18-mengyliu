@@ -37,8 +37,8 @@ def main():
 	tweets = api.user_timeline(screen_name=username, count=num_tweets, tweet_mode="extended")
 	for tweet in tweets:
 		if 'retweeted_status' in dir(tweet):
-			tweet_info = tweet.retweeted_status.full_text
-			# tweet_info = tweet.full_text
+			# tweet_info = tweet.retweeted_status.full_text
+			tweet_info = tweet.full_text
 		else:
 			tweet_info = tweet.full_text
 			original_count += 1
